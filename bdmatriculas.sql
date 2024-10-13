@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-10-2024 a las 04:32:25
+-- Tiempo de generación: 13-10-2024 a las 05:16:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -200,15 +200,18 @@ CREATE TABLE `unidaddidactica` (
   `id_unidad` int(11) NOT NULL,
   `nombre_unidad` varchar(100) NOT NULL,
   `abreviatura_unidad` varchar(6) NOT NULL,
-  `creditos_unidad` int(11) NOT NULL,
-  `horas_semanales_unidad` int(11) NOT NULL,
-  `horas_teoricas_unidad` int(11) NOT NULL,
-  `horas_practicas_unidad` int(11) NOT NULL,
+  `id_plan_unidad` int(11) DEFAULT NULL,
   `programa_estudios_unidad` varchar(100) DEFAULT NULL,
-  `periodo_academico_unidad` varchar(3) DEFAULT NULL,
   `modulo_unidad` char(3) DEFAULT NULL,
   `tipo_unidad` varchar(15) DEFAULT NULL,
-  `id_plan_unidad` int(11) DEFAULT NULL
+  `periodo_academico_unidad` varchar(3) DEFAULT NULL,
+  `creditos_teoricos_unidad` int(11) NOT NULL,
+  `creditos_practicas_unidad` int(11) NOT NULL,
+  `creditos_totales_unidad` int(11) NOT NULL,
+  `horas_teoricas_unidad` int(11) NOT NULL,
+  `horas_practicas_unidad` int(11) NOT NULL,
+  `horas_totales_unidad` int(11) NOT NULL,
+  `horas_semanales_unidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------

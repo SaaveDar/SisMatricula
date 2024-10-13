@@ -70,15 +70,15 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						Registrar
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Postulante</a>
-						<a class="dropdown-item" href="#">Estudiante</a>
-						<a class="dropdown-item" href="#">Periodo Lectivo</a>
-						<a class="dropdown-item" href="#">Programa de Estudios</a>
+                        <a class="dropdown-item" href="postulante.php">Postulante</a>
+						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
+						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
+						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
-						<a class="dropdown-item" href="#">Usuario</a>
+						<a class="dropdown-item" href="usuario.php">Usuario</a>
 					</div>
 				</li>
 				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
