@@ -74,10 +74,10 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						<a class="dropdown-item" href="#">Estudiante</a>
 						<a class="dropdown-item" href="#">Periodo Lectivo</a>
 						<a class="dropdown-item" href="#">Programa de Estudios</a>
-						<a class="dropdown-item" href="#">Plan de Estudios</a>
-						<a class="dropdown-item" href="#">Unidades Didacticas</a>
-						<a class="dropdown-item" href="#">Periodo Academico</a>
-						<a class="dropdown-item" href="#">Tupa</a>
+						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
+						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
+						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
+						<a class="dropdown-item" href="tupa.php">Tupa</a>
 						<a class="dropdown-item" href="#">Usuario</a>
 					</div>
 				</li>

@@ -14,9 +14,10 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="<?php echo $URL;?>/public/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="bd-example mb-0" style="height: 80vh">
+<!--	<div class="bd-example mb-0" style="height: 80vh">
 		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -52,7 +53,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-	</div>
+	</div>-->
 
 	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
 		<div class="text-white bg-success p-2">
@@ -75,8 +76,8 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						<a class="dropdown-item" href="#">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
-						<a class="dropdown-item" href="#">Periodo Academico</a>
-						<a class="dropdown-item" href="#">Tupa</a>
+						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
+						<a class="dropdown-item" href="tupa.php">Tupa</a>
 						<a class="dropdown-item" href="#">Usuario</a>
 					</div>
 				</li>
@@ -86,7 +87,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						Reporte
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Postulante</a>
+						<a class="dropdown-item" href="">Postulante</a>
 						<a class="dropdown-item" href="#">Estudiante</a>
 						<a class="dropdown-item" href="#">Matriculas</a>
 						<a class="dropdown-item" href="#">Estado de cuenta</a>
@@ -101,7 +102,73 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 		</div>
 
 	</nav>
-	
+	<main>
+	<div class="row">
+        <div class="container" style="width: 95%">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
+                        <div class="card-header">
+                            Registrar Tupa
+                        </div>
+                        <div class="card-body">
+                            <form action="controller_create.php" method="post" enctype="multipart/form-data">
+                                <div class="row">
+								
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Nombre Tupa </label>
+                                            <input type="text" name="nombre_tupa" class="form-control" required>
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Descripcion Plan </label>
+                                            <input type="text" name="descripcion_tupa" class="form-control" required>
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Monto </label>
+                                            <input type="number" name="monto_tupa" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Fecha </label>
+                                            <input type="date" name="fecha_tupa" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                <hr>
+                                <hr>
+                                <hr>
+                                </br>
+                                </br>
+                                <center>
+                                    <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('Por favor revisa bien los datos antes de enviar');">
+                                        <i class="fa fa-save"></i> Registrar Tupa
+                                    </button>
+                                </center>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+        </div>
+    </div>
+	</main>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 	<div class="">
 		<div class="jumbotron bg-dark text-light rounded-0">
         <!--Pie de pagina-->
