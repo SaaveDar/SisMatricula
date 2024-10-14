@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-10-2024 a las 05:16:31
+-- Tiempo de generación: 14-10-2024 a las 07:40:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,9 +42,10 @@ CREATE TABLE `estadopago` (
 
 CREATE TABLE `estudiante` (
   `id_estudiante` int(11) NOT NULL,
-  `programa_estudios_estudiante` varchar(80) DEFAULT NULL,
-  `id_persona_estudiante` int(11) DEFAULT NULL,
-  `id_periodo_lectivo_estudiante` int(11) DEFAULT NULL
+  `id_persona_estudiante` int(11) NOT NULL,
+  `id_periodo_lectivo_estudiante` int(11) NOT NULL,
+  `id_programa_estudios_estudiante` int(11) NOT NULL,
+  `fecha_registro_estudiante` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -112,25 +113,26 @@ CREATE TABLE `periodolectivo` (
 
 CREATE TABLE `persona` (
   `id_persona` int(11) NOT NULL,
-  `DNI_persona` int(11) NOT NULL,
-  `primer_nombre_persona` varchar(30) DEFAULT NULL,
+  `tipo_documento_identidad_persona` varchar(50) NOT NULL,
+  `nro_documento_persona` int(11) NOT NULL,
+  `primer_nombre_persona` varchar(30) NOT NULL,
   `segundo_nombre_persona` varchar(30) DEFAULT NULL,
   `tercer_nombre_persona` varchar(30) DEFAULT NULL,
-  `primer_apellido_persona` varchar(30) DEFAULT NULL,
-  `segundo_apellido_persona` varchar(30) DEFAULT NULL,
-  `direccion_persona` varchar(100) DEFAULT NULL,
-  `telefono_persona` int(11) DEFAULT NULL,
-  `correo_persona` varchar(100) DEFAULT NULL,
-  `fecha_nacimiento_persona` date DEFAULT NULL,
-  `sexo_persona` char(1) DEFAULT NULL
+  `primer_apellido_persona` varchar(30) NOT NULL,
+  `segundo_apellido_persona` varchar(30) NOT NULL,
+  `sexo_persona` char(1) NOT NULL,
+  `fecha_nacimiento_persona` date NOT NULL,
+  `celular_persona` int(11) NOT NULL,
+  `correo_persona` varchar(100) NOT NULL,
+  `direccion_persona` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`id_persona`, `DNI_persona`, `primer_nombre_persona`, `segundo_nombre_persona`, `tercer_nombre_persona`, `primer_apellido_persona`, `segundo_apellido_persona`, `direccion_persona`, `telefono_persona`, `correo_persona`, `fecha_nacimiento_persona`, `sexo_persona`) VALUES
-(1, 43001122, 'Carlos', 'Luis', NULL, 'Rivera', 'Gonzales', 'Calle Los Geranios 258', 999526333, 'crivera@gmail.com', '1986-01-07', 'F');
+INSERT INTO `persona` (`id_persona`, `tipo_documento_identidad_persona`, `nro_documento_persona`, `primer_nombre_persona`, `segundo_nombre_persona`, `tercer_nombre_persona`, `primer_apellido_persona`, `segundo_apellido_persona`, `sexo_persona`, `fecha_nacimiento_persona`, `celular_persona`, `correo_persona`, `direccion_persona`) VALUES
+(1, '', 43001122, 'Carlos', 'Luis', NULL, 'Rivera', 'Gonzales', 'F', '1986-01-07', 999526333, 'crivera@gmail.com', 'Calle Los Geranios 258');
 
 -- --------------------------------------------------------
 
@@ -152,17 +154,18 @@ CREATE TABLE `planestudios` (
 
 CREATE TABLE `postulante` (
   `id_postulante` int(11) NOT NULL,
-  `foto_postulante` blob DEFAULT NULL,
-  `colegio_procedencia_postulante` varchar(100) DEFAULT NULL,
-  `primera_opcion_postulante` varchar(80) DEFAULT NULL,
-  `segunda_opcion_postulante` varchar(80) DEFAULT NULL,
-  `partida_nacimiento_postulante` char(2) DEFAULT NULL,
-  `pago_postulante` char(2) DEFAULT NULL,
-  `certificado_estudios_postulante` char(2) DEFAULT NULL,
-  `dni_foto_postulante` char(2) DEFAULT NULL,
-  `declaracion_jurada_postulante` char(2) DEFAULT NULL,
-  `id_persona_postulante` int(11) DEFAULT NULL,
-  `id_periodo_lectivo_postulante` int(11) DEFAULT NULL
+  `id_persona_postulante` int(11) NOT NULL,
+  `anio_admision_postulante` int(11) NOT NULL,
+  `colegio_procedencia_postulante` varchar(100) NOT NULL,
+  `primera_opcion_postulante` varchar(80) NOT NULL,
+  `segunda_opcion_postulante` varchar(80) NOT NULL,
+  `dni_foto_postulante` text DEFAULT NULL,
+  `pago_postulante` text DEFAULT NULL,
+  `foto_postulante` text DEFAULT NULL,
+  `certificado_estudios_postulante` text DEFAULT NULL,
+  `partida_nacimiento_postulante` text DEFAULT NULL,
+  `declaracion_jurada_postulante` text DEFAULT NULL,
+  `fecha_registro_postulante` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -254,7 +257,8 @@ ALTER TABLE `estadopago`
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`id_estudiante`),
   ADD KEY `id_persona_estudiante` (`id_persona_estudiante`),
-  ADD KEY `id_periodo_lectivo_estudiante` (`id_periodo_lectivo_estudiante`);
+  ADD KEY `id_periodo_lectivo_estudiante` (`id_periodo_lectivo_estudiante`),
+  ADD KEY `id_programa_estudios_estudiante` (`id_programa_estudios_estudiante`);
 
 --
 -- Indices de la tabla `matricula`
@@ -295,7 +299,7 @@ ALTER TABLE `periodolectivo`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`id_persona`),
-  ADD UNIQUE KEY `DNI_persona` (`DNI_persona`);
+  ADD UNIQUE KEY `DNI_persona` (`nro_documento_persona`);
 
 --
 -- Indices de la tabla `planestudios`
@@ -308,8 +312,7 @@ ALTER TABLE `planestudios`
 --
 ALTER TABLE `postulante`
   ADD PRIMARY KEY (`id_postulante`),
-  ADD KEY `id_persona_postulante` (`id_persona_postulante`),
-  ADD KEY `id_periodo_lectivo_postulante` (`id_periodo_lectivo_postulante`);
+  ADD KEY `id_persona_postulante` (`id_persona_postulante`);
 
 --
 -- Indices de la tabla `programaestudios`
@@ -435,7 +438,8 @@ ALTER TABLE `estadopago`
 --
 ALTER TABLE `estudiante`
   ADD CONSTRAINT `estudiante_ibfk_1` FOREIGN KEY (`id_persona_estudiante`) REFERENCES `persona` (`id_persona`),
-  ADD CONSTRAINT `estudiante_ibfk_2` FOREIGN KEY (`id_periodo_lectivo_estudiante`) REFERENCES `periodolectivo` (`id_periodo_lectivo`);
+  ADD CONSTRAINT `estudiante_ibfk_2` FOREIGN KEY (`id_periodo_lectivo_estudiante`) REFERENCES `periodolectivo` (`id_periodo_lectivo`),
+  ADD CONSTRAINT `estudiante_ibfk_3` FOREIGN KEY (`id_programa_estudios_estudiante`) REFERENCES `programaestudios` (`id_programa`);
 
 --
 -- Filtros para la tabla `matricula`
@@ -461,8 +465,7 @@ ALTER TABLE `pago`
 -- Filtros para la tabla `postulante`
 --
 ALTER TABLE `postulante`
-  ADD CONSTRAINT `postulante_ibfk_1` FOREIGN KEY (`id_persona_postulante`) REFERENCES `persona` (`id_persona`),
-  ADD CONSTRAINT `postulante_ibfk_2` FOREIGN KEY (`id_periodo_lectivo_postulante`) REFERENCES `periodolectivo` (`id_periodo_lectivo`);
+  ADD CONSTRAINT `postulante_ibfk_1` FOREIGN KEY (`id_persona_postulante`) REFERENCES `persona` (`id_persona`);
 
 --
 -- Filtros para la tabla `unidaddidactica`
