@@ -1,8 +1,18 @@
 <?php
 session_start();
+include __DIR__ . '../conexion.php';
+
 if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	header("location:login.php");
 } 
+
+// Verificar si hay un mensaje en la sesión y mostrarlo
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']); // Limpiar el mensaje después de mostrarlo
+} else {
+    $message = ''; // Si no hay mensaje, dejar vacío
+}
 
 ?>
 <!DOCTYPE html>
@@ -10,50 +20,26 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	
+                                    
 	<link rel="stylesheet" href="css/estilo.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="stylesheet" href="<?php echo $URL;?>/public/css/bootstrap.min.css">
+	
+	
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-<!--	<div class="bd-example mb-0" style="height: 80vh">
-		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="carousel-item active" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-					
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-	</div>-->
+	<?php
+		// Si se recibe un mensaje de éxito o error, lo mostramos en una ventana emergente
+		if (isset($_GET['message'])) {
+			$message = $_GET['message'];
+			echo "<script>alert('$message');</script>";
+		}
+	?>
 
 	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
 		<div class="text-white bg-success p-2">
@@ -70,7 +56,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						Registrar
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					    <a class="dropdown-item" href="postulante.php">Postulante</a>
+						<a class="dropdown-item" href="postulante.php">Postulante</a>
 						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
 						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
 						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
@@ -78,7 +64,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
-						<a class="dropdown-item" href="usuario.php">Usuario</a>
+						<a class="dropdown-item" href="#">Usuario</a>
 					</div>
 				</li>
 				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
@@ -106,92 +92,137 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	<div class="row">
         <div class="container" style="width: 95%">
             <br>
+           
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar Unidades Didácticas
+                            Registrar Unidades Didácticas  <span id="message" style="color: green;"><?php echo $message; ?></span>
                         </div>
                         <div class="card-body">
-                            <form action="controller_create.php" method="post" enctype="multipart/form-data">
+                            <form action="controladorud.php" method="POST" id="miud" enctype="multipart/form-data">
                                 <div class="row">
 								
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Nombre Unidad Didáctica</label>
-                                            <input type="text" name="nombre_ud" class="form-control" required>
+                                            <input type="text" name="nombre_ud" class="form-control" maxlength="50" required>
+											<input type="hidden" name="estado" id="estado" value="1">
+
                                         </div>
                                     </div>
 									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Abrev. UD</label>
-                                            <input type="text" name="abrev_ud" class="form-control" required>
+                                            <input type="text" name="abrev_ud" class="form-control" maxlength="10" required>
                                         </div>
                                     </div>
 									<div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Créditos</label>
-                                            <input type="number" name="creditos_ud" class="form-control" required>
+                                            <label for="">Plan de Estudios</label>
+                                            <select name="planestudios_ud" id="planestudios_ud" class="form-control" required>
+											    <option >Seleccione </option>
+											    <?php
+													$queryplan = $conexion -> query ("SELECT * FROM planestudios");
+													while ($valoresplan = mysqli_fetch_array($queryplan)) {
+														echo '
+													<option value="'.$valoresplan["id_plan"].'">'.$valoresplan["nombre_plan"]. " - ".$valoresplan["anio"].'</option>';
+													}	?>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="">Horas Semanal</label>
-                                            <input type="number" name="horasemanal_ud" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="">Horas teoricas</label>
-                                            <input type="number" name="horateorica_ud" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="">Horas Prácticas</label>
-                                            <input type="number" name="horapractica_ud" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Programa de Estudios</label>
-                                            <select name="programa_ud" id="" class="form-control" required>
+										
+											<select id="programa_ud" name="programa_ud"  class="form-control" required>
+												<option value="" >Seleccione </option>
+												<?php
+													$querype = $conexion -> query ("SELECT * FROM programaestudios");
+													while ($valorespe = mysqli_fetch_array($querype)) {
+														echo '
+													<option value="'.$valorespe["id_programa"].'">'.$valorespe["abreviatura_programa"]. " - ".$valorespe["nombre_programa"].'</option>';
+													}	?>
+                                             
+											</select>
+											
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Periodo academico</label>
+                                            <input type="number" name="periodoacademico_ud" class="form-control" oninput="validateInput(this, 6);" required >
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Módulo</label>
+											<select name="modulo_ud" id="modulo_ud" class="form-control" required>
 											    <option >Seleccione </option>
-											    <option value="">1</option>
-                                                <option value="">2</option>
+											    <option value="I">I</option>
+                                                <option value="II">II</option>
+												<option value="III">III</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Periodo academico</label>
-                                            <input type="text" name="periodoacademico_ud" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="">Módulo</label>
-                                            <input type="number" name="modulo_ud" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
                                             <label for="">Tipo</label>
-                                            <input type="text" name="tipo_ud" class="form-control" required>
+											<select name="tipo_ud" id="tipo_ud" class="form-control" required>
+											    <option >Seleccione </option>
+											    <option value="Empleabilidad">Empleabilidad</option>
+                                                <option value="Especifico">Específico</option>
+                                            </select>
                                         </div>
                                     </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Créditos</label>
+                                            <input type="number" name="creditos_ud" id="creditos_ud" class="form-control"   readonly> 
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Horas teoricas</label>
+                                            <input type="number" name="horateorica_ud" id="horateorica_ud" oninput="validateInput(this, 2);calcularSumaYDivision()" class="form-control"  required>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Horas Prácticas</label>
+                                            <input type="number" name="horapractica_ud" id="horapractica_ud" oninput="validateInput(this, 2);calcularSumaYDivision()" class="form-control"  required >
+                                        </div>
+                                    </div>
+									
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Horas Total</label>
+                                            <input type="number" name="horatotal_ud" id="horatotal_ud" class="form-control" readonly>
+                                        </div>
+                                    </div>
+									
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Horas Semanal</label>
+                                            <input type="number" name="horasemanal_ud" id="horasemanal_ud" class="form-control"  readonly>
+                                        </div>
+                                    </div>
+                                                                                                         
                                 
                                 <hr>
                                 <hr>
                                 <hr>
                                
                                 <center>
-                                    <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('Por favor revisa bien los datos antes de enviar');">
+                                    <button name="btnregisterud" type="submit" class="btn btn-primary btn-lg" >
                                         <i class="fa fa-save"></i> Registrar Unidad Didacticas
                                     </button>
+									
                                 </center>
 
                             </form>
+						
                         </div>
                     </div>
                 </div>
@@ -216,22 +247,6 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	</div>
 	</div>
 
-<!--
-	<form action="" class="form-inline d-flex justify-content-center flex-column flex-md-row">
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Nombre</label>
-			<input type="text" class="form-control" placeholder="Nombre">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Apellido</label>
-			<input type="text" class="form-control" placeholder="Apellido">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<button class="btn btn-outline-primary">enviar</button>
-		</div>
-	</form>
-
--->
 
     <script src="js/jquery-3.3.1.slim.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -240,3 +255,64 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 </body>
 
 </html>
+
+<script>
+    function validateInput(input, maxLength) {
+            // Obtiene el valor ingresado
+            const inputValue = input.value;
+
+            // Expresión regular para comprobar si el valor ingresado no es un número
+            const regex = /^[0-9]*$/;
+
+            // Eliminar caracteres no numéricos en tiempo real
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            // Verifica si el valor ingresado es un número
+            if (!regex.test(inputValue)) {
+                alert('Error: Solo se permiten números.');
+                input.value = ''; // Limpia el campo si no es un número
+                return;
+            }
+
+            // Verifica la longitud máxima permitida
+            if (inputValue.length > maxLength) {
+                alert(`Error: El número no puede exceder los ${maxLength} dígitos.`);
+                input.value = inputValue.slice(0, maxLength); // Limita el valor a maxLength dígitos
+            }
+        }
+
+		function calcularSumaYDivision() {
+			// Obtener los valores de las cajas de texto
+			var valor1 = document.getElementById("horateorica_ud").value;
+			var valor2 = document.getElementById("horapractica_ud").value;
+			// Convertir los valores a números, si no hay un número válido, asumir 0
+			var num1 = parseFloat(valor1) || 0;
+			var num2 = parseFloat(valor2) || 0;
+			// Calcular la suma
+			var suma = num1 + num2;
+			// Mostrar el resultado de la suma en el input 3
+			document.getElementById("horatotal_ud").value = suma;
+			// Dividir la suma entre 16 y mostrar el resultado en el input 4
+			var division = suma / 16;
+			document.getElementById("horasemanal_ud").value = division;
+
+			// calcular creditos
+			// Obtener los valores de los inputs y convertirlos en números
+            var valor1 = parseFloat(document.getElementById("horateorica_ud").value) || 0;
+            var valor2 = parseFloat(document.getElementById("horapractica_ud").value) || 0;	
+			// Dividir el valor del input1 entre 16 y el valor del input2 entre 32
+            var variable1 = valor1 / 16;
+            var variable2 = valor2 / 32;
+
+            // Sumar variable1 y variable2
+            var suma = variable1 + variable2;
+
+            // Redondear el resultado
+            var resultadoRedondeado = Math.round(suma);
+
+            // Mostrar el resultado redondeado en el input5
+            document.getElementById("creditos_ud").value = resultadoRedondeado;
+		}
+   
+	</script>
+

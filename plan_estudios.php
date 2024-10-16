@@ -4,6 +4,15 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	header("location:login.php");
 } 
 
+
+// Verificar si hay un mensaje en la sesión y mostrarlo
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']); // Limpiar el mensaje después de mostrarlo
+} else {
+    $message = ''; // Si no hay mensaje, dejar vacío
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,43 +26,14 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
     <link rel="stylesheet" href="<?php echo $URL;?>/public/css/bootstrap.min.css">
 </head>
 <body>
-<!--	<div class="bd-example mb-0" style="height: 80vh">
-		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="carousel-item active" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-					
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-	</div>-->
+		<?php
+				// Si se recibe un mensaje de éxito o error, lo mostramos en una ventana emergente
+				if (isset($_GET['message'])) {
+					$message = $_GET['message'];
+					echo "<script>alert('$message');</script>";
+				}
+			?>
+
 
 	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
 		<div class="text-white bg-success p-2">
@@ -110,25 +90,32 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar Plan de estudio
+                            Registrar Plan de estudio <span id="message" style="color: green;"><?php echo $message; ?></span>
                         </div>
                         <div class="card-body">
-                            <form action="controller_create.php" method="post" enctype="multipart/form-data">
+                            <form action="controladorpe.php" method="POST" enctype="multipart/form-data">
                                 <div class="row">
 								
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Nombre Plan </label>
-                                            <input type="text" name="nombre_plan" class="form-control" required>
+                                            <label for="">Nombre Plan Estudios (LET. IN.)</label>
+                                            <input type="text" name="nombre_plan" id="nombre_plan" class="form-control" maxlength="5" required>
+											<input type="hidden" name="estado" id="estado" value="1">
+
                                         </div>
                                     </div>
 									<div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Descripcion Plan </label>
-                                            <input type="text" name="descripcion_plan" class="form-control" required>
+                                            <label for=""> Descrip/detalle Plan Estudios</label>
+                                            <input type="text" name="descripcion_plan" id="nombre_plan" class="form-control" maxlength="50" required>
                                         </div>
                                     </div>
-									
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for=""> Año Plan Estudios</label>
+                                            <input type="number" name="anio" id="anio" class="form-control" oninput="validateInput(this, 4);" required>
+                                        </div>
+                                    </div>
 
                                 <hr>
                                 <hr>
@@ -190,3 +177,31 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 </body>
 
 </html>
+<script>
+    function validateInput(input, maxLength) {
+            // Obtiene el valor ingresado
+            const inputValue = input.value;
+
+            // Expresión regular para comprobar si el valor ingresado no es un número
+            const regex = /^[0-9]*$/;
+
+            // Eliminar caracteres no numéricos en tiempo real
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            // Verifica si el valor ingresado es un número
+            if (!regex.test(inputValue)) {
+                alert('Error: Solo se permiten números.');
+                input.value = ''; // Limpia el campo si no es un número
+                return;
+            }
+
+            // Verifica la longitud máxima permitida
+            if (inputValue.length > maxLength) {
+                alert(`Error: El número no puede exceder los ${maxLength} dígitos.`);
+                input.value = inputValue.slice(0, maxLength); // Limita el valor a maxLength dígitos
+            }
+        }
+
+		
+   
+	</script>
