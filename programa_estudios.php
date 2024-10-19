@@ -1,13 +1,23 @@
 <?php
 session_start();
+// Conexión a la base de datos
+include __DIR__ . '../conexion.php';
+
 if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	header("location:login.php");
+	
 } 
-
+// Verificar si hay un mensaje en la sesión y mostrarlo
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']); // Limpiar el mensaje después de mostrarlo
+} else {
+    $message = ''; // Si no hay mensaje, dejar vacío
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="css/estilo.css">
@@ -110,15 +120,15 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar datos del programa de estudios
+                            Registrar datos del programa de estudios <span id="message" style="color: green;"><?php echo $message; ?></span>
                         </div>
                         <div class="card-body">
-                            <form action="controller_create.php" method="post" enctype="multipart/form-data">
+                            <form action="controladorprogramae.php" method="post" enctype="multipart/form-data">
                                 <div class="row">
 									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">ABREVIATURA DEL PROGRAMA</label>
-                                            <input type="text" name="abreviatura_progrma" class="form-control" required>
+                                            <input type="text" name="abreviatura_programa" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -152,7 +162,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 		<p> © 2024 IESTP LAREDO | Reservados todos los derechos</p>
 		</div>
 	</div>
-	</div>
+	
 
 <!--
 	<form action="" class="form-inline d-flex justify-content-center flex-column flex-md-row">
