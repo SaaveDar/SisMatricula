@@ -22,22 +22,21 @@ if (isset($_POST['abreviatura_programa']) && isset($_POST['nombre_programa'])) {
 
     // Crear la consulta SQL 
     $sql = "INSERT INTO programaestudios (abreviatura_programa, nombre_programa, estado) VALUES (
-        '$abre_programa', '$nombre_programa', 1
-    )";
+        '$abre_programa', '$nombre_programa', 1)";
 
-if ($conexion->query($sql) === TRUE) {
-    // Redirige a la página principal con un mensaje de éxito
-    header('Location: programa_estudios.php?message=Datos guardados correctamente.');
-    $_SESSION['message'] = '(Datos guardados correctamente.)';
-} else {
-    // Redirige a la página principal con un mensaje de error
-    header('Location: programa_estudios.php?message=Error al guardar los datos.');
-    $_SESSION['message'] = '(Erroral guardar los datos.)';
-}
+    if ($conexion->query($sql) === TRUE) {
+        // Redirige a la página principal con un mensaje de éxito
+        header('Location: programa_estudios.php?message=Datos guardados correctamente.');
+        $_SESSION['message'] = '(PROGRAMA DE ESTUDIOS GUARDÓ CON EXITO)';
+    } else {
+        // Redirige a la página principal con un mensaje de error
+        header('Location: programa_estudios.php?message=Error al guardar los datos.');
+        $_SESSION['message'] = '(ERROR AL GUARDAR PROGRAMA DE ESTUDIOS)';
+    }
 } else {
 // Si los datos no fueron enviados correctamente, redirige con un mensaje de error
 header('Location: programa_estudios.php?message=Por favor, complete todos los campos.');
-$_SESSION['message'] = '(Por favor, complete todos los campos.)';
+$_SESSION['message'] = '(Por favor, complete todos los campos)';
 }
  
 $conexion->close();

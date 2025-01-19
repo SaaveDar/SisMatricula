@@ -14,15 +14,16 @@ if ($conexion->connect_error) {
 $mensaje = ""; // Variable para el mensaje de resultado
 
 if (isset($_POST['nombre_plan']) && isset($_POST['descripcion_plan'])) {
-    // Escapar los datos recibidos para evitar inyección SQL
+    // Escapar los datos recibidos para evitar inyección SQL   
+    $id_programa = $conexion ->real_escape_string($_POST['programa_ud']);
     $nombre_plan = $conexion->real_escape_string($_POST['nombre_plan']);
     $descripcion_plan = $conexion->real_escape_string($_POST['descripcion_plan']); 
     $anio =  (int)$_POST['anio'];
     $estado = $conexion->real_escape_string($_POST['estado']);
 
     // Crear la consulta SQL 
-    $sql = "INSERT INTO planestudios (nombre_plan, descripcion_plan, anio, estado) values (
-        '$nombre_plan', '$descripcion_plan', '$anio', '$estado'
+    $sql = "INSERT INTO planestudios (id_programaestudios, nombre_plan, descripcion_plan, anio, estado) values (
+        UPPER('$nombre_plan'), UPPER('$id_programa', '$descripcion_plan'), '$anio', '$estado'
     )";
 
 if ($conexion->query($sql) === TRUE) {

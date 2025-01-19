@@ -19,7 +19,7 @@ if (isset($_SESSION['message'])) {
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Unidades Didácticas</title>
 	
                                     
 	<link rel="stylesheet" href="css/estilo.css">
@@ -41,11 +41,17 @@ if (isset($_SESSION['message'])) {
 		}
 	?>
 
-	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
-		<div class="text-white bg-success p-2">
-			<?php
+<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
+		<div class=logo>
+            <a class="navbar-brand" href="inicio.php"><img src="img/logo_istelaredo1.png" alt="Logo" width="140" height="50"></a>
+        </div>
+        <div class="text-white bg-success p-2" >
+        <a  class="text-white bg-success p-2" href="inicio.php" >
+        <?php
 			echo "Bienvenido ".$_SESSION["nombre"]." ".$_SESSION["apellido"];
 			?>
+		</a>
+            
 		</div>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<div class="navbar-nav mr-auto">
@@ -53,37 +59,68 @@ if (isset($_SESSION['message'])) {
 						
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Registrar
+						Registro
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="postulante.php">Postulante</a>
-						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
+						<a class="dropdown-item" href="estudiante.php">Ingresante</a>
 						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
 						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
-						<a class="dropdown-item" href="#">Usuario</a>
+                        <a class="dropdown-item" href="pago.php">Pagos</a>
+						<a class="dropdown-item" href="usuario.php">Usuario</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Matriculas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="matriculas.php">Generar Matriculas</a>
+						<a class="dropdown-item" href="convalidacion_otros.php">Convalidaciones y otras</a>
+						
+					</div>
+				</li>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Consultas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="consultarud.php">Unidades Didacticas</a>
+						<a class="dropdown-item" href="reporte_estadocuentas.php">Pagos Realizados</a>
+					</div>
+				</li>
 				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Configuraciòn
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="configurar_periodolectivo.php">Periodo Lectivo</a>
+												
+					</div>
+				</li>
+                <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Reporte
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="">Postulante</a>
+						<a class="dropdown-item" href="reporte_postulantes.php">Postulante</a>
 						<a class="dropdown-item" href="#">Estudiante</a>
-						<a class="dropdown-item" href="#">Matriculas</a>
-						<a class="dropdown-item" href="#">Estado de cuenta</a>
+						<a class="dropdown-item" href="alumnos_matriculados.php">Matriculas</a>
+						<a class="dropdown-item" href="estadocuentagenerarpdf.php">Estado de cuenta</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
 			</div>
 			<div class="text-center justify-content-center">
-				<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>
-				<a class="btn btn-outline-danger" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
+			<!--	<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>-->
+				<a class="btn btn-outline-primary" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
 			</div>
 		</div>
 
@@ -97,7 +134,9 @@ if (isset($_SESSION['message'])) {
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar Unidades Didácticas  <span id="message" style="color: green;"><?php echo $message; ?></span>
+                        <div class="text-center">
+                           <strong> REGISTRAR UNIDAD DIDÁCTICA</strong>  <span id="message" style="color: green;"><?php echo $message; ?></span>
+                        </div>
                         </div>
                         <div class="card-body">
                             <form action="controladorud.php" method="POST" id="miud" enctype="multipart/form-data">
@@ -106,7 +145,7 @@ if (isset($_SESSION['message'])) {
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Nombre Unidad Didáctica</label>
-                                            <input type="text" name="nombre_ud" class="form-control" maxlength="50" required>
+                                            <input type="text" name="nombre_ud" class="form-control" maxlength="50" placeholder="Nombbre completo de la UD" required>
 											<input type="hidden" name="estado" id="estado" value="1">
 
                                         </div>
@@ -114,7 +153,7 @@ if (isset($_SESSION['message'])) {
 									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Abrev. UD</label>
-                                            <input type="text" name="abrev_ud" class="form-control" maxlength="10" required>
+                                            <input type="text" name="abrev_ud" class="form-control" placeholder="Abreviatura de la UD" maxlength="10" required>
                                         </div>
                                     </div>
 									<div class="col-md-3">
@@ -151,7 +190,16 @@ if (isset($_SESSION['message'])) {
 									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Periodo academico</label>
-                                            <input type="number" name="periodoacademico_ud" class="form-control" oninput="validateInput(this, 6);" required >
+                                            <!--<input type="text" name="periodoacademico_ud" class="form-control" maxlength="3" required > -->
+                                            <select name="periodoacademico_ud" id="periodoacademico_ud" class="form-control" required>
+											    <option >Seleccione </option>
+											    <option value="I">I</option>
+                                                <option value="II">II</option>
+												<option value="III">III</option>
+                                                <option value="IV">IV</option>
+                                                <option value="V">V</option>
+                                                <option value="VI">VI</option>
+                                            </select>
                                         </div>
                                     </div>
 									<div class="col-md-3">
@@ -170,8 +218,8 @@ if (isset($_SESSION['message'])) {
                                             <label for="">Tipo</label>
 											<select name="tipo_ud" id="tipo_ud" class="form-control" required>
 											    <option >Seleccione </option>
-											    <option value="Empleabilidad">Empleabilidad</option>
-                                                <option value="Especifico">Específico</option>
+											    <option value="EMPLEABILIDAD">Empleabilidad</option>
+                                                <option value="ESPECIFICO">Específico</option>
                                             </select>
                                         </div>
                                     </div>
@@ -191,7 +239,7 @@ if (isset($_SESSION['message'])) {
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Horas Prácticas</label>
-                                            <input type="number" name="horapractica_ud" id="horapractica_ud" oninput="validateInput(this, 2);calcularSumaYDivision()" class="form-control"  required >
+                                            <input type="number" name="horapractica_ud" id="horapractica_ud" oninput="validateInput(this, 3);calcularSumaYDivision()" class="form-control"  required >
                                         </div>
                                     </div>
 									
@@ -207,16 +255,12 @@ if (isset($_SESSION['message'])) {
                                             <label for="">Horas Semanal</label>
                                             <input type="number" name="horasemanal_ud" id="horasemanal_ud" class="form-control"  readonly>
                                         </div>
-                                    </div>
-                                                                                                         
-                                
-                                <hr>
-                                <hr>
-                                <hr>
-                               
+                                    </div>                                                                 
+                                </div>
+                                <hr>                              
                                 <center>
                                     <button name="btnregisterud" type="submit" class="btn btn-primary btn-lg" >
-                                        <i class="fa fa-save"></i> Registrar Unidad Didacticas
+                                        <i class="fa fa-save"></i> Registrar
                                     </button>
 									
                                 </center>
@@ -226,19 +270,11 @@ if (isset($_SESSION['message'])) {
                         </div>
                     </div>
                 </div>
-
             </div>
             <br>
         </div>
     </div>
 	</main>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 	<div class="">
 		<div class="jumbotron bg-dark text-light rounded-0">
         <!--Pie de pagina-->
@@ -246,7 +282,6 @@ if (isset($_SESSION['message'])) {
 		</div>
 	</div>
 	</div>
-
 
     <script src="js/jquery-3.3.1.slim.min.js"></script>
 	<script src="js/popper.min.js"></script>

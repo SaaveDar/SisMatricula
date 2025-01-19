@@ -34,8 +34,8 @@ if (isset($_POST['nombre_ud']) && isset($_POST['abrev_ud'])) {
     $sql = "INSERT INTO unidaddidactica (nombre_unidad, abreviatura_unidad, id_plan_unidad, programa_estudios_unidad, modulo_unidad, tipo_unidad, periodo_academico_unidad, creditos_unidad,
 horas_teoricas_unidad, horas_practicas_unidad, horas_totales_unidad, horas_semanales_unidad, estado) 
 VALUES (
-        '$nombre_ud', '$abrev_ud', '$planestudios_ud', '$programa_ud', 
-        '$modulo_ud', '$tipo_ud', '$periodoacademico_ud', $creditos_ud, 
+        UPPER('$nombre_ud'), UPPER('$abrev_ud'), UPPER('$planestudios_ud'), UPPER('$programa_ud'), 
+        UPPER('$modulo_ud'), UPPER('$tipo_ud'), UPPER('$periodoacademico_ud'), $creditos_ud, 
         $horateorica_ud, $horapractica_ud, $horatotal_ud, $horasemanal_ud, '$estado'
     )";
 

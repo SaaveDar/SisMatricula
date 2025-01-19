@@ -1,15 +1,25 @@
 <?php
 session_start();
+// Conexión a la base de datos
+include __DIR__ . '../conexion.php';
+
 if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	header("location:login.php");
+	
 } 
-
+// Verificar si hay un mensaje en la sesión y mostrarlo
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']); // Limpiar el mensaje después de mostrarlo
+} else {
+    $message = ''; // Si no hay mensaje, dejar vacío
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Periodo Lectivo</title>
 	<link rel="stylesheet" href="css/estilo.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,49 +27,17 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
     <link rel="stylesheet" href="<?php echo $URL;?>/public/css/bootstrap.min.css">
 </head>
 <body>
-<!--	<div class="bd-example mb-0" style="height: 80vh">
-		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="carousel-item active" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						
-					</div>
-				</div>
-				<div class="carousel-item" style="height: 80vh">
-					<img src="img/1.jpg" class="d-block w-100" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-					
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-	</div>-->
-
-	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
-		<div class="text-white bg-success p-2">
-			<?php
+<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
+		<div class=logo>
+            <a class="navbar-brand" href="inicio.php"><img src="img/logo_istelaredo1.png" alt="Logo" width="140" height="50"></a>
+        </div>
+        <div class="text-white bg-success p-2" >
+        <a  class="text-white bg-success p-2" href="inicio.php" >
+        <?php
 			echo "Bienvenido ".$_SESSION["nombre"]." ".$_SESSION["apellido"];
 			?>
+		</a>
+            
 		</div>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<div class="navbar-nav mr-auto">
@@ -67,37 +45,68 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 						
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Registrar
+						Registro
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					    <a class="dropdown-item" href="postulante.php">Postulante</a>
-						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
+						<a class="dropdown-item" href="postulante.php">Postulante</a>
+						<a class="dropdown-item" href="estudiante.php">Ingresante</a>
 						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
 						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
+                        <a class="dropdown-item" href="pago.php">Pagos</a>
 						<a class="dropdown-item" href="usuario.php">Usuario</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Matriculas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="matriculas.php">Generar Matriculas</a>
+						<a class="dropdown-item" href="convalidacion_otros.php">Convalidaciones y otras</a>
+						
+					</div>
+				</li>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Consultas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="consultarud.php">Unidades Didacticas</a>
+						<a class="dropdown-item" href="reporte_estadocuentas.php">Pagos Realizados</a>
+					</div>
+				</li>
 				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Configuraciòn
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="configurar_periodolectivo.php">Periodo Lectivo</a>
+												
+					</div>
+				</li>
+                <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Reporte
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Postulante</a>
+						<a class="dropdown-item" href="reporte_postulantes.php">Postulante</a>
 						<a class="dropdown-item" href="#">Estudiante</a>
-						<a class="dropdown-item" href="#">Matriculas</a>
-						<a class="dropdown-item" href="#">Estado de cuenta</a>
+						<a class="dropdown-item" href="alumnos_matriculados.php">Matriculas</a>
+						<a class="dropdown-item" href="estadocuentagenerarpdf.php">Estado de cuenta</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				<li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
 			</div>
 			<div class="text-center justify-content-center">
-				<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>
-				<a class="btn btn-outline-danger" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
+			<!--	<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>-->
+				<a class="btn btn-outline-primary" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
 			</div>
 		</div>
 
@@ -110,23 +119,45 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar datos del periodo académico
+							<div class="text-center" >
+                           		<strong> REGISTRAR PERIODO LECTIVO</strong> <span id="message" style="color: green;"><?php echo $message; ?></span>
+							</div>  
                         </div>
                         <div class="card-body">
-                            <form action="controller_create.php" method="post" enctype="multipart/form-data">
+                            <form action="controladorpl.php" method="post" id="pl" enctype="multipart/form-data">
                                 <div class="row">
 									<div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">NOMBRE DEL PERIODO ACADÉMICO</label>
-                                            <input type="text" name="nombre_periodo_academico" class="form-control" required>
+                                            <label for="">NOMBRE DEL PERIODO LECTIVO</label>
+                                            <input type="text" name="nombre_pl" id="nombre_pl" class="form-control" maxlength="7" placeholder="Ejem: 2024-I " required>
                                         </div>
                                     </div>
-                                </div>
 
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">PERIODO LECTIVO</label>
+                                            <input type="number" name="nombre_number" id="nombre_number" class="form-control" maxlength="6" placeholder="Ejem: 202410 " required>
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">FECHA INICIO</label>
+                                            <input type="date" name="fechainicio" id="fechainicio" class="form-control" maxlength="6"  required>
+                                        </div>
+                                    </div>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">FECHA FINAL</label>
+                                            <input type="date" name="fechafinal" id="fechafinal" class="form-control" maxlength="6"  required>
+                                        </div>
+                                    </div>
+
+                                </div>
+								
                                 <hr>
                                 <center>
                                     <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('Por favor revisa bien los datos antes de enviar');">
-                                        <i class="fa fa-save"></i> Registrar periodo académico
+                                        <i class="fa fa-save"></i> Registrar
                                 </center>
 
                             </form>
@@ -139,6 +170,13 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
         </div>
     </div>
 	</main>
+	</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 	<div class="">
 		<div class="jumbotron bg-dark text-light rounded-0">
         <!--Pie de pagina-->
@@ -146,24 +184,6 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 		</div>
 	</div>
 	</div>
-
-<!--
-	<form action="" class="form-inline d-flex justify-content-center flex-column flex-md-row">
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Nombre</label>
-			<input type="text" class="form-control" placeholder="Nombre">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Apellido</label>
-			<input type="text" class="form-control" placeholder="Apellido">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<button class="btn btn-outline-primary">enviar</button>
-		</div>
-	</form>
-
--->
-
     <script src="js/jquery-3.3.1.slim.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

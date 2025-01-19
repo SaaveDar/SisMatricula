@@ -7,10 +7,8 @@
    <link rel="stylesheet" href="css/bootstrap.css">
    <link rel="stylesheet" type="text/css" href="css/style.css">
    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-   <!-- <link rel="stylesheet" href="css/all.min.css"> -->
-   <!-- <link rel="stylesheet" href="css/fontawesome.min.css"> -->
    <link href="https://tresplazas.com/web/img/big_punto_de_venta.png" rel="shortcut icon">
-   <title>Inicio de sesión</title>
+   <title>Login</title>
 </head>
 
 <body>

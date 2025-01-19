@@ -1,5 +1,6 @@
 <?php
 session_start();
+include __DIR__ . '../conexion.php';
 if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	header("location:login.php");
 } 
@@ -18,7 +19,7 @@ if (isset($_SESSION['message'])) {
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Plan Estudios</title>
 	<link rel="stylesheet" href="css/estilo.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,11 +36,17 @@ if (isset($_SESSION['message'])) {
 			?>
 
 
-	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
-		<div class="text-white bg-success p-2">
-			<?php
+<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
+		<div class=logo>
+            <a class="navbar-brand" href="inicio.php"><img src="img/logo_istelaredo1.png" alt="Logo" width="140" height="50"></a>
+        </div>
+        <div class="text-white bg-success p-2" >
+        <a  class="text-white bg-success p-2" href="inicio.php" >
+        <?php
 			echo "Bienvenido ".$_SESSION["nombre"]." ".$_SESSION["apellido"];
 			?>
+		</a>
+            
 		</div>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<div class="navbar-nav mr-auto">
@@ -47,37 +54,68 @@ if (isset($_SESSION['message'])) {
 						
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Registrar
+						Registro
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					    <a class="dropdown-item" href="postulante.php">Postulante</a>
-						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
+						<a class="dropdown-item" href="postulante.php">Postulante</a>
+						<a class="dropdown-item" href="estudiante.php">Ingresante</a>
 						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
 						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
+                        <a class="dropdown-item" href="pago.php">Pagos</a>
 						<a class="dropdown-item" href="usuario.php">Usuario</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Matriculas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="matriculas.php">Generar Matriculas</a>
+						<a class="dropdown-item" href="convalidacion_otros.php">Convalidaciones y otras</a>
+						
+					</div>
+				</li>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Consultas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="consultarud.php">Unidades Didacticas</a>
+						<a class="dropdown-item" href="reporte_estadocuentas.php">Pagos Realizados</a>
+					</div>
+				</li>
 				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Configuraciòn
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="configurar_periodolectivo.php">Periodo Lectivo</a>
+												
+					</div>
+				</li>
+                <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Reporte
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="">Postulante</a>
+						<a class="dropdown-item" href="reporte_postulantes.php">Postulante</a>
 						<a class="dropdown-item" href="#">Estudiante</a>
-						<a class="dropdown-item" href="#">Matriculas</a>
-						<a class="dropdown-item" href="#">Estado de cuenta</a>
+						<a class="dropdown-item" href="alumnos_matriculados.php">Matriculas</a>
+						<a class="dropdown-item" href="estadocuentagenerarpdf.php">Estado de cuenta</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+			    <li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
 			</div>
 			<div class="text-center justify-content-center">
-				<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>
-				<a class="btn btn-outline-danger" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
+			<!--	<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>-->
+				<a class="btn btn-outline-primary" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
 			</div>
 		</div>
 
@@ -90,44 +128,60 @@ if (isset($_SESSION['message'])) {
                 <div class="col-md-12">
                     <div class="card card-primary" style="box-shadow: 0px 5px 5px 5px #c0c0c0">
                         <div class="card-header">
-                            Registrar Plan de estudio <span id="message" style="color: green;"><?php echo $message; ?></span>
+							<div class="text-center">
+                            <strong>REGISTRAR PLAN DE ESTUDIOS</strong> <span id="message" style="color: green;"><?php echo $message; ?></span>
+							</div>
                         </div>
                         <div class="card-body">
                             <form action="controladorpe.php" method="POST" enctype="multipart/form-data">
                                 <div class="row">
-								
+									
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Nombre Plan Estudios (LET. IN.)</label>
-                                            <input type="text" name="nombre_plan" id="nombre_plan" class="form-control" maxlength="5" required>
+                                            <label for="">Código</label>
+                                            <input type="text" name="nombre_plan" id="nombre_plan" class="form-control" placeholder="Ejem: APSTI o ENFETEC o CONTEC" maxlength="6" required>
 											<input type="hidden" name="estado" id="estado" value="1">
 
                                         </div>
                                     </div>
-									<div class="col-md-3">
+									<div class="col-md-6">
                                         <div class="form-group">
                                             <label for=""> Descrip/detalle Plan Estudios</label>
-                                            <input type="text" name="descripcion_plan" id="nombre_plan" class="form-control" maxlength="50" required>
+                                            <input type="text" name="descripcion_plan" id="nombre_plan" class="form-control" placeholder="Ejem: Plan de estudios - (nombre_carrera)" maxlength="50" required>
                                         </div>
                                     </div>
 									<div class="col-md-3">
                                         <div class="form-group">
                                             <label for=""> Año Plan Estudios</label>
-                                            <input type="number" name="anio" id="anio" class="form-control" oninput="validateInput(this, 4);" required>
+                                            <input type="number" name="anio" id="anio" class="form-control" placeholder="Ejem: 2020" oninput="validateInput(this, 4);" required>
                                         </div>
                                     </div>
-
-                                <hr>
-                                <hr>
-                                <hr>
-                                </br>
+									<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for=""> Programa de estudios </label>
+											<select id="programa_ud" name="programa_ud"  class="form-control" required>
+												<option value="" >Seleccione </option>
+												<?php
+													$querype = $conexion -> query ("SELECT * FROM programaestudios");
+													while ($valorespe = mysqli_fetch_array($querype)) {
+														echo '
+													<option value="'.$valorespe["id_programa"].'">'.$valorespe["abreviatura_programa"]. " - ".$valorespe["nombre_programa"].'</option>';
+													}	?>
+                                             
+											</select>
+                                        </div>
+                                    </div>
+									
+									
+								</div>
+                             
                                 </br>
                                 <center>
                                     <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('Por favor revisa bien los datos antes de enviar');">
-                                        <i class="fa fa-save"></i> Registrar Plan Estudios
+                                        <i class="fa fa-save"></i> Registrar
                                     </button>
                                 </center>
-
+								
                             </form>
                         </div>
                     </div>

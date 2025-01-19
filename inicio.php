@@ -1,6 +1,10 @@
 <?php
 session_start();
-if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
+//Capturo el tipo de usuario
+$tipo_usuario = $_SESSION["tipo_usuario"];
+
+if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"]) and empty($_SESSION["tipo_usuario"])) {
+	
 	header("location:login.php");
 } 
 
@@ -9,7 +13,7 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Inicio</title>
 	<link rel="stylesheet" href="css/estilo.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,48 +59,193 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	</div>
 
 	<nav class="navbar navbar-dark bg-dark  navbar-expand-md navbar-light bg-light fixed-top">
-		<div class="text-white bg-success p-2">
-			<?php
+		<div class=logo>
+            <a class="navbar-brand" href="inicio.php"><img src="img/logo_istelaredo1.png" alt="Logo" width="140" height="50"></a>
+        </div>
+        <div class="text-white bg-success p-2" >
+        <a  class="text-white bg-success p-2" href="inicio.php" >
+        <?php
 			echo "Bienvenido ".$_SESSION["nombre"]." ".$_SESSION["apellido"];
 			?>
+		</a>
+            
 		</div>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<div class="navbar-nav mr-auto">
 				<div class="offset-md-1 mr-auto text-center"></div>
-						
+				<?php if($tipo_usuario == "Administrador"):?>		
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Registrar
+						Registro
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="postulante.php">Postulante</a>
-						<a class="dropdown-item" href="estudiante.php">Estudiante</a>
+						<a class="dropdown-item" href="estudiante.php">Ingresante</a>
 						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
 						<a class="dropdown-item" href="programa_estudios.php">Programa de Estudios</a>
 						<a class="dropdown-item" href="plan_estudios.php">Plan de Estudios</a>
 						<a class="dropdown-item" href="unidades_didacticas.php">Unidades Didacticas</a>
 						<a class="dropdown-item" href="periodo_academico.php">Periodo Academico</a>
 						<a class="dropdown-item" href="tupa.php">Tupa</a>
+                        <a class="dropdown-item" href="pago.php">Pagos</a>
 						<a class="dropdown-item" href="usuario.php">Usuario</a>
+						
+						<!-- Realizo la validacion-->
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="#">Matricular</a>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
 				<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Matriculas
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="matriculas.php">Generar Matriculas</a>
+							<a class="dropdown-item" href="convalidacion_otros.php">Convalidaciones y otras</a>
+						
+						</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Consultas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="consultarud.php">Unidades Didacticas</a>
+						<a class="dropdown-item" href="reporte_estadocuentas.php">Pagos Realizados</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Configuraciòn
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="configurar_periodolectivo.php">Periodo Lectivo</a>
+												
+					</div>
+				</li>
+                <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Reporte
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Postulante</a>
+						<a class="dropdown-item" href="reporte_postulantes.php">Postulante</a>
 						<a class="dropdown-item" href="#">Estudiante</a>
-						<a class="dropdown-item" href="#">Matriculas</a>
-						<a class="dropdown-item" href="#">Estado de cuenta</a>
+						<a class="dropdown-item" href="alumnos_matriculados.php">Matriculas</a>
+						<a class="dropdown-item" href="estadocuentagenerarpdf.php">Estado de cuenta</a>
 					</div>
 				</li>
-				<a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				<li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
+				<?php endif; ?>
+
+				<?php if($tipo_usuario == "Tesorero"):?>		
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Registro
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="tupa.php">Tupa</a>
+                        <a class="dropdown-item" href="pago.php">Pagos</a>
+					</div>
+				</li>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Consultas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="reporte_estadocuentas.php">Pagos Realizados</a>
+					</div>
+				</li>
+
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Reporte
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="estadocuentagenerarpdf.php">Estado de cuenta</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
+				<?php endif; ?>
+
+
+				<?php if($tipo_usuario == "Secretario academico"):?>		
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Registro
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="estudiante.php">Ingresante</a>
+						<a class="dropdown-item" href="periodo_lectivo.php">Periodo Lectivo</a>
+						
+					</div>
+				</li>
+				<!--<a class="nav-item nav-link text-justify ml-3 hover-primary" href="matriculas.php">Matricular</a>-->
+				<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Matriculas
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="matriculas.php">Generar Matriculas</a>
+							<a class="dropdown-item" href="convalidacion_otros.php">Convalidaciones y otras</a>
+						
+						</div>
+				</li>
+				
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Configuraciòn
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="configurar_periodolectivo.php">Periodo Lectivo</a>
+												
+					</div>
+				</li>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Reporte
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="#">Estudiante</a>
+						<a class="dropdown-item" href="alumnos_matriculados.php">Matriculas</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
+				<?php endif; ?>
+
+
+				<?php if($tipo_usuario == "Usuario Estandar"):?>		
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify active ml-3 hover-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Registro
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="postulante.php">Postulante</a>
+					</div>
+				</li>
+				
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-justify ml-3" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Reporte
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="reporte_postulantes.php">Postulante</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+                  <a class="nav-item nav-link text-justify ml-3 hover-primary" href="controladorCerrar.php">Salir</a>
+				</li>
+				<?php endif; ?>
+
 			</div>
 			<div class="text-center justify-content-center">
-				<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>
-				<a class="btn btn-outline-danger" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
+			<!--	<a class="btn btn-outline-primary" target="_blank" href="https://www.facebook.com/istelaredo.trujillo.7">Facebook</a>-->
+				<a class="btn btn-outline-primary" target="_blank" href="https://istelaredo.edu.pe">www.istelaredo.edu.pe</a>
 			</div>
 		</div>
 
@@ -104,29 +253,10 @@ if (empty($_SESSION["nombre"]) and empty($_SESSION["apellido"])) {
 	
 	<div class="">
 		<div class="jumbotron bg-dark text-light rounded-0">
-        <!--Pie de pagina-->
-		<p> © 2024 IESTP LAREDO | Reservados todos los derechos</p>
+        <p> © 2024 IESTP LAREDO | Reservados todos los derechos</p>
 		</div>
 	</div>
 	</div>
-
-<!--
-	<form action="" class="form-inline d-flex justify-content-center flex-column flex-md-row">
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Nombre</label>
-			<input type="text" class="form-control" placeholder="Nombre">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<label class="d-none d-md-block" for="">Apellido</label>
-			<input type="text" class="form-control" placeholder="Apellido">
-		</div>
-		<div class="form-group mx-2 my-2">
-			<button class="btn btn-outline-primary">enviar</button>
-		</div>
-	</form>
-
--->
-
     <script src="js/jquery-3.3.1.slim.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
